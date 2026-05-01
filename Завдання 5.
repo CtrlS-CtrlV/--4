@@ -1,0 +1,33 @@
+STYLESHEET = """
+QWidget {
+    background-color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+}
+QPushButton {
+    background-color: #0078d4;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+QPushButton:hover {
+    background-color: #005a9e;
+}
+QLineEdit:focus {
+    border: 2px solid #0078d4;
+}
+"""
+
+class CustomDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Введення параметрів")
+        layout = QVBoxLayout(self)
+        self.input = QLineEdit()
+        self.btn = QPushButton("ОК")
+        self.btn.clicked.connect(self.accept)
+        layout.addWidget(QLabel("Введіть нову назву:"))
+        layout.addWidget(self.input)
+        layout.addWidget(self.btn)
+
+    def get_data(self):
+        return self.input.text()
