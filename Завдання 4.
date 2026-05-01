@@ -1,0 +1,30 @@
+from PyQt6.QtCore import pyqtSignal
+
+class InputComponent(QWidget):
+    # Кастомний сигнал: передає текст
+    data_submitted = pyqtSignal(str)
+
+    def __init__(self):
+        super().__init__()
+        layout = QHBoxLayout(self)
+        self.entry = QLineEdit()
+        btn = QPushButton("Надіслати")
+        btn.clicked.connect(self.emit_data)
+        layout.addWidget(self.entry)
+        layout.addWidget(btn)
+
+    def emit_data(self):
+        self.data_submitted.emit(self.entry.text())
+
+class DisplayComponent(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.label = QLabel("Очікування даних...")
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.label)
+
+    def update_text(self, text):
+        self.label.setText(f"Отримано: {text}")
+
+# У головному вікні з'єднуємо їх зовні:
+# self.input_comp.data_submitted.connect(self.display_comp.update_text)
